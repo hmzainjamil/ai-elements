@@ -1,6 +1,6 @@
 # ai-elements
 
-> **AI elements — reusable Claude Code building blocks for agent workflows**
+> **AI elements — reusable Claude Code building blocks for agent workflow composition**
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat)
@@ -14,14 +14,14 @@
 
 | Concept | Description |
 |---|---|
-| **Elements** | Core elements capability for ai-elements workflows |
-| **Blocks** | Core blocks capability for ai-elements workflows |
-| **Components** | Core components capability for ai-elements workflows |
-| **Claude** | Core claude capability for ai-elements workflows |
-| **Agent** | Core agent capability for ai-elements workflows |
-| **Reusable** | Core reusable capability for ai-elements workflows |
-| **Workflow** | Core workflow capability for ai-elements workflows |
-| **Building** | Core building capability for ai-elements workflows |
+| **Element** | Atomic reusable unit of agent capability |
+| **Composition** | Combine elements into complex workflows |
+| **Input/Output** | Typed contracts between elements |
+| **Retry Logic** | Built-in error recovery per element |
+| **Caching** | Skip redundant calls with smart cache |
+| **Logging** | Trace element execution for debugging |
+| **Testing** | Unit-testable element interface |
+| **Registry** | Discover available elements via index |
 
 ---
 
@@ -46,19 +46,19 @@ claude 'what can ai-elements do?'
 ## ☠️ STARTUPS / BUSINESSES
 
 - **Agencies**: automate elements workflows for clients at scale
-- **Founders**: ship blocks features 10x faster with Claude
-- **Freelancers**: deliver components work with AI-assisted precision
+- **Founders**: ship blocks features 10x faster
+- **Freelancers**: deliver components work with AI precision
 
 ---
 
 ## Features
 
-- Elements automation and orchestration
-- Blocks automation and orchestration
-- Components automation and orchestration
-- Claude automation and orchestration
-- Agent automation and orchestration
-- Reusable automation and orchestration
+- Elements automation
+- Blocks automation
+- Components automation
+- Claude automation
+- Agent automation
+- Reusable automation
 
 ---
 
@@ -74,9 +74,14 @@ cd ai-elements
 ## Usage
 
 ```bash
-# In Claude Code
-/ai-elements
-claude 'elements task here'
+# Activate skill in Claude Code
+claude --skill ai-elements "your task here"
+
+# Quick workflow
+claude "elements automation task"
+
+# Get help
+claude "what can ai-elements do?"
 ```
 
 ---
@@ -85,11 +90,11 @@ claude 'elements task here'
 
 | Variable | Description | Default |
 |---|---|---|
-| `API_KEY` | Primary API key for service access | Required |
+| `API_KEY` | Primary API key | Required |
 | `MODEL` | AI model to use | claude-3-5-sonnet |
-| `DEBUG` | Enable verbose debug output | false |
-| `MAX_TOKENS` | Max token budget per request | 8192 |
-| `TIMEOUT` | Request timeout in seconds | 30 |
+| `DEBUG` | Enable verbose debug | false |
+| `MAX_TOKENS` | Max token budget | 8192 |
+| `TIMEOUT` | Request timeout (sec) | 30 |
 | `LOG_LEVEL` | Logging verbosity | info |
 
 ---
@@ -98,40 +103,36 @@ claude 'elements task here'
 
 ```
 ai-elements/
-├── README.md           # This file
+├── README.md           # Documentation
 ├── SKILL.md            # Claude Code skill definition
-├── scripts/            # Automation and utility scripts
-├── templates/          # Output and prompt templates
-├── examples/           # Usage examples and demos
-├── tests/              # Unit and integration tests
+├── scripts/            # Automation scripts
+├── templates/          # Output templates
+├── examples/           # Usage examples
 └── docs/               # Extended documentation
-    ├── setup.md        # Setup guide
-    ├── api.md          # API reference
-    └── faq.md          # Frequently asked questions
 ```
 
 ---
 
 ## Examples
 
-### Basic Usage
+### Basic
 
 ```bash
-# Activate in Claude Code
-claude --skill ai-elements "your task here"
+# Simple task
+claude --skill ai-elements "elements task"
 
-# With options
-claude --skill ai-elements --verbose "detailed task"
+# Verbose
+claude --skill ai-elements --verbose "detailed blocks task"
 ```
 
-### Advanced Workflow
+### Advanced Pipeline
 
 ```bash
-# Chain with other skills
+# Chain skills
 claude --skill ai-elements "step 1" | claude --skill summarize
 
-# Batch processing
-for item in list; do
+# Batch run
+for item in $(cat list.txt); do
   claude --skill ai-elements "process $item"
 done
 ```
@@ -142,18 +143,18 @@ done
 
 | Issue | Cause | Fix |
 |---|---|---|
-| Auth fails | Invalid/expired API key | Re-export key in shell profile |
-| Timeout error | Network latency or large payload | Increase TIMEOUT value |
-| Empty output | Prompt too vague | Add more context to request |
-| Rate limit hit | Too many requests | Add delay between calls |
-| Model error | Unsupported model version | Update MODEL variable |
+| Auth fails | Invalid API key | Re-export key in shell profile |
+| Timeout | Network or large payload | Increase TIMEOUT value |
+| Empty output | Prompt too vague | Add more context |
+| Rate limit | Too many requests | Add delay between calls |
+| Model error | Unsupported version | Update MODEL variable |
 | Import error | Missing dependency | Run pip install -r requirements.txt |
 
 ---
 
 ## Comparison
 
-| Feature | This Skill | Alternative A | Alternative B |
+| Feature | This Skill | Alt A | Alt B |
 |---|---|---|---|
 | Claude Code native | ✅ | ❌ | ✅ |
 | Auto-activation | ✅ | ✅ | ❌ |
@@ -163,23 +164,21 @@ done
 
 ---
 
-## Contributing
-
-1. Fork this repo
-2. Create feature branch: `git checkout -b feat/your-feature`
-3. Commit changes: `git commit -m 'feat: add feature'`
-4. Push: `git push origin feat/your-feature`
-5. Open PR
-
----
-
 ## Changelog
 
 | Version | Changes |
 |---|---|
-| v2.0 | Major refactor, Claude 4 support |
-| v1.5 | Added auto-activation keywords |
+| v2.0 | Claude 4 support, auto-activation |
+| v1.5 | Added keyword triggers |
 | v1.0 | Initial release |
+
+---
+
+## Contributing
+
+1. Fork → feature branch → commit → PR
+2. Follow conventional commits: `feat:`, `fix:`, `docs:`
+3. Add tests for new features
 
 ---
 
@@ -191,7 +190,7 @@ done
 
 ## 📜 License
 
-MIT — free to use, modify, and distribute.
+MIT — free to use, modify, distribute.
 
 ---
 
