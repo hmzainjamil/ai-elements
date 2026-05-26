@@ -1,408 +1,150 @@
-# ai-elements
+# ▲ AI Elements
 
-![badge](https://img.shields.io/badge/Claude-Code-blue?style=flat) ![badge](https://img.shields.io/badge/AI-Powered-orange?style=flat) ![badge](https://img.shields.io/badge/Open-Source-green?style=flat)
+[AI Elements](https://elements.ai-sdk.dev) is a component library built on top of [shadcn/ui](https://ui.shadcn.com/) to help you build AI-native applications faster.
 
-> Reusable AI UI components and elements
+## Overview
 
----
-
-## CONCEPTS
-
-| Concept | Description | Source |
-|---------|-------------|--------|
-| Core — Reusable foundation for ai-ui workflows | Core foundation — the primary abstraction this repo builds on | [docs](#) |
-| Execution — task decomposition and ai-ui routing | Execution layer — how tasks get decomposed and routed | [docs](#) |
-| Integration — Claude Code + components connectivity | Integration layer — connecting to external tools and APIs | [docs](#) |
-| Orchestration — multi-agent coordination and handoffs | Orchestration — multi-agent coordination and handoffs | [docs](#) |
-| Memory — persistent context across sessions | Memory — persistent context across sessions | [docs](#) |
-| Routing — intent-based skill activation | Routing — intent-based skill activation and deactivation | [docs](#) |
-| Output — structured artifacts and deliverables | Output — structured artifacts, reports, and deliverables | [docs](#) |
-| Observability — logging, tracing, audit trails | Observability — logging, tracing, and audit trails | [docs](#) |
-
----
-
-## 🔥 Hot Commands
-
-```bash
-# Quick start
-python3 main.py --task "ai-ui task here"
-
-# Power user shortcut
-python3 main.py --ai-ui --fast
-
-# Batch execution
-python3 main.py --batch tasks.txt --parallel 4
-
-# Status check
-python3 main.py --status
-```
-
-■ tip: Run with `--model qwen2.5:7b` for zero-cost local execution
-
----
-
-## ☠️ STARTUPS / BUSINESSES
-
-Use ai-elements to automate reusable ai ui components and elements. Perfect for agencies, freelancers, and AI-first teams running ai-ui workflows at scale.
-
----
-
-## Features
-
-- ✅ Reusable AI UI components and elements
-- ✅ Claude Code native integration
-- ✅ Ollama / Groq / Gemini model support
-- ✅ Batch processing with parallelism
-- ✅ Intent-based auto-activation
-- ✅ Zero-cost local execution path
-
----
+AI Elements provides pre-built, customizable React components specifically designed for AI applications, including conversations, messages, code blocks, reasoning displays, and more. The CLI makes it easy to add these components to your Next.js project.
 
 ## Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/hmzainjamil/ai-elements.git
-cd ai-elements
-
-# Install dependencies
-pip install -r requirements.txt  # or npm install
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your API keys
-
-# Verify installation
-python3 main.py --verify
-```
-
----
-
-## Quick Start
+You can use the AI Elements CLI directly with npx, or install it globally:
 
 ```bash
-# Minimal working example
-python3 main.py --input "your task here"
+# Use directly (recommended)
+npx ai-elements@latest
 
-# With options
-python3 main.py --input "task" --model gpt-4 --output ~/Downloads/result.json
-
-# Batch mode
-python3 main.py --batch tasks.txt --parallel 4
+# Or using shadcn cli
+npx shadcn@latest add https://elements.ai-sdk.dev/api/registry/all.json
 ```
 
----
+## Prerequisites
 
-## Architecture
+Before using AI Elements, ensure your project meets these requirements:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                      Input Layer                         │
-│  CLI / API / Webhook / Scheduled trigger                 │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                   Orchestration Layer                    │
-│  Intent detection → Skill routing → Agent dispatch      │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                   Execution Layer                        │
-│  Parallel agents · Tool calls · External APIs           │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                    Output Layer                          │
-│  Structured results · Files · Notifications             │
-└─────────────────────────────────────────────────────────┘
+- **Node.js** 18 or later
+- **Next.js** project with [AI SDK](https://ai-sdk.dev/) installed
+- **shadcn/ui** initialized in your project (`npx shadcn@latest init`)
+- **Tailwind CSS** configured (AI Elements supports CSS Variables mode only)
+
+## Usage
+
+### Install All Components
+
+Install all available AI Elements components at once:
+
+```bash
+npx ai-elements@latest
 ```
 
----
+This command will:
+
+- Set up shadcn/ui if not already configured
+- Install all AI Elements components to your configured components directory
+- Add necessary dependencies to your project
+
+### Install Specific Components
+
+Install individual components using the `add` command:
+
+```bash
+npx ai-elements@latest add <component-name>
+```
+
+Examples:
+
+```bash
+# Install the message component
+npx ai-elements@latest add message
+
+# Install the conversation component
+npx ai-elements@latest add conversation
+
+# Install the code-block component
+npx ai-elements@latest add code-block
+```
+
+### Alternative: Use with shadcn CLI
+
+You can also install components using the standard shadcn/ui CLI:
+
+```bash
+# Install all components
+npx shadcn@latest add https://elements.ai-sdk.dev/api/registry/all.json
+
+# Install a specific component
+npx shadcn@latest add https://elements.ai-sdk.dev/api/registry/message.json
+```
+
+## Quick Start Example
+
+After installing components, you can use them in your React application:
+
+```tsx
+"use client";
+
+import { useChat } from "@ai-sdk/react";
+import {
+  Conversation,
+  ConversationContent,
+} from "@/components/ai-elements/conversation";
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "@/components/ai-elements/message";
+
+export default function Chat() {
+  const { messages } = useChat();
+
+  return (
+    <Conversation>
+      <ConversationContent>
+        {messages.map((message, index) => (
+          <Message key={index} from={message.role}>
+            <MessageContent>
+              <MessageResponse>{message.content}</MessageResponse>
+            </MessageContent>
+          </Message>
+        ))}
+      </ConversationContent>
+    </Conversation>
+  );
+}
+```
+
+## How It Works
+
+The AI Elements CLI:
+
+1. **Detects your package manager** (npm, pnpm, yarn, or bun) automatically
+2. **Fetches component registry** from `https://elements.ai-sdk.dev/api/registry/registry.json`
+3. **Installs components** using the shadcn/ui CLI under the hood
+4. **Adds dependencies** and integrates with your existing shadcn/ui setup
+
+Components are installed to your configured shadcn/ui components directory (typically `@/components/ai-elements/`) and become part of your codebase, allowing for full customization.
 
 ## Configuration
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `MODEL` | `qwen2.5:7b` | LLM model to use |
-| `PARALLEL` | `4` | Max parallel workers |
-| `TIMEOUT` | `120` | Per-task timeout (seconds) |
-| `OUTPUT_DIR` | `~/Downloads` | Default output directory |
-| `LOG_LEVEL` | `INFO` | Logging verbosity |
-| `CACHE` | `true` | Enable response caching |
-| `MAX_RETRIES` | `3` | Auto-retry on failure |
-| `API_KEY` | — | Provider API key |
+AI Elements uses your existing shadcn/ui configuration. Components will be installed to the directory specified in your `components.json` file.
 
----
+## Recommended Setup
 
-## Examples
+For the best experience, we recommend:
 
-### Example 1 — Basic Usage
-
-```python
-from main import run
-
-result = run(
-    task="Analyze this dataset",
-    model="qwen2.5:7b",
-    output="~/Downloads/analysis.json"
-)
-print(result.summary)
-```
-
-### Example 2 — Batch Processing
-
-```python
-tasks = [
-    "Summarize document A",
-    "Extract entities from B",
-    "Compare A and B",
-]
-results = run_batch(tasks, parallel=3)
-for r in results:
-    print(r.title, r.status)
-```
-
-### Example 3 — Integration with Claude Code
-
-```bash
-# Add to CLAUDE.md
-echo "Auto-activate: ai-ui, components" >> ~/.claude/CLAUDE.md
-
-# Or load skill directly
-/load-skill ai-elements
-```
-
----
-
-## Comparison
-
-| Feature | This Repo | Alternative A | Alternative B |
-|---------|-----------|--------------|--------------|
-| Speed | ⚡ Fast | 🐢 Slow | ⚡ Fast |
-| Cost | Free | Paid | Freemium |
-| Local | ✅ Yes | ❌ No | ✅ Yes |
-| Multi-agent | ✅ Yes | ❌ No | ❌ No |
-| Memory | ✅ Yes | ✅ Yes | ❌ No |
-| Streaming | ✅ Yes | ❌ No | ✅ Yes |
-| CLI | ✅ Yes | ✅ Yes | ❌ No |
-
----
-
-## Troubleshooting
-
-### Issue: Command not found
-```bash
-# Add to PATH
-export PATH="$PATH:$(pwd)/bin"
-source ~/.zshrc
-```
-
-### Issue: API key not set
-```bash
-echo 'export API_KEY="your-key-here"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-### Issue: Model timeout
-```bash
-# Increase timeout
-export TIMEOUT=300
-# Or use faster model
-python3 main.py --model qwen2.5:7b
-```
-
-### Issue: Out of memory
-```bash
-# Reduce parallel workers
-python3 main.py --parallel 1
-# Or use smaller model
-python3 main.py --model llama3.2:3b
-```
-
----
-
-## API Reference
-
-### `run(task, model, output)`
-Execute a single task.
-
-| Param | Type | Required | Description |
-|-------|------|----------|-------------|
-| `task` | `str` | ✅ | Task description |
-| `model` | `str` | ❌ | LLM model (default: auto) |
-| `output` | `str` | ❌ | Output path |
-| `timeout` | `int` | ❌ | Timeout in seconds |
-
-Returns: `Result` object with `.summary`, `.data`, `.status`
-
-### `run_batch(tasks, parallel)`
-Execute multiple tasks in parallel.
-
-| Param | Type | Required | Description |
-|-------|------|----------|-------------|
-| `tasks` | `list[str]` | ✅ | List of task strings |
-| `parallel` | `int` | ❌ | Max concurrent (default: 4) |
-| `model` | `str` | ❌ | LLM model |
-
-Returns: `list[Result]`
-
----
-
-## Workflow Integration
-
-### n8n
-```json
-{
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.executeCommand",
-      "parameters": {
-        "command": "python3 /path/to/main.py --input '{{ $json.input }}'"
-      }
-    }
-  ]
-}
-```
-
-### Make.com / Zapier
-Use HTTP Request module → POST to local webhook endpoint.
-
-### Claude Code Hook
-```json
-{
-  "hooks": {
-    "PostToolUse": [{"matcher": "ai-ui", "command": "python3 ~/repos/ai-elements/main.py"}]
-  }
-}
-```
-
----
-
-## Performance
-
-| Metric | Value |
-|--------|-------|
-| Avg latency (local) | < 2s |
-| Avg latency (cloud) | < 5s |
-| Throughput (batch) | 50 tasks/min |
-| Memory footprint | < 512MB |
-| Cold start | < 3s |
-| Cache hit rate | ~70% |
-
----
-
-## Roadmap
-
-- [x] Core execution engine
-- [x] CLI interface
-- [x] Batch processing
-- [x] Multi-agent support
-- [ ] Web UI dashboard
-- [ ] Real-time streaming API
-- [ ] Plugin marketplace
-- [ ] Mobile companion app
-- [ ] Enterprise SSO
-
----
+1. **AI Gateway**: Set up [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) and add `AI_GATEWAY_API_KEY` to your `.env.local`
+2. **CSS Variables**: Use shadcn/ui's CSS Variables mode for theming
+3. **TypeScript**: Enable TypeScript for better development experience
 
 ## Contributing
 
-```bash
-# Fork and clone
-gh repo fork hmzainjamil/ai-elements --clone
-cd ai-elements
+If you'd like to contribute to AI Elements, please follow these steps:
 
-# Create feature branch
-git checkout -b feat/your-feature
-
-# Make changes, then test
-python3 -m pytest tests/
-
-# Submit PR
-gh pr create --title "feat: your feature" --body "Description"
-```
+1. Fork the repository
+2. Create a new branch
+3. Make your changes to the components in `packages/elements`.
+4. Open a PR to the `main` branch.
 
 ---
 
-## Changelog
-
-### v2.0.0
-- Multi-agent orchestration
-- Intent-based skill routing
-- 50% faster batch processing
-
-### v1.5.0
-- Added streaming output
-- Memory persistence
-- n8n integration
-
-### v1.0.0
-- Initial release
-- Core CLI
-- Basic agent execution
-
----
-
-## License
-
-MIT — use freely, attribution appreciated.
-
----
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=hmzainjamil/ai-elements&type=Date)](https://star-history.com/#hmzainjamil/ai-elements&Date)
-
----
-
-*Built with Claude Code · Powered by open-source LLMs · Zero vendor lock-in*
-
----
-
-## Related Projects
-
-| Repo | Description | Stars |
-|------|-------------|-------|
-| [hmz-claude-code-best-practice](https://github.com/hmzainjamil/hmz-claude-code-best-practice) | Best practices for Claude Code | ⭐ |
-| [G0DM0D3](https://github.com/hmzainjamil/G0DM0D3) | AI agency OS | ⭐ |
-| [agent-skills](https://github.com/hmzainjamil/agent-skills) | Skill library | ⭐ |
-| [awesome-agentic-patterns](https://github.com/hmzainjamil/awesome-agentic-patterns) | Agentic design patterns | ⭐ |
-
----
-
-## Security
-
-- Never commit API keys to version control
-- Use `.env` files (added to `.gitignore`)
-- Rotate keys regularly
-- Use least-privilege API scopes
-- Audit tool permissions before granting
-
-```bash
-# Check for secrets before commit
-git diff --staged | grep -i "key\|secret\|token\|password"
-```
-
----
-
-## FAQ
-
-**Q: Does this work offline?**
-A: Yes — local models via Ollama require no internet.
-
-**Q: What models are supported?**
-A: Any Ollama model, OpenAI-compatible API, Groq, DeepSeek, Gemini.
-
-**Q: How do I add custom tools?**
-A: Drop a `.py` file in `tools/` directory — auto-discovered on startup.
-
-**Q: Can I use this in production?**
-A: Yes — add rate limiting and error handling for production workloads.
-
-**Q: Is there a cloud-hosted version?**
-A: Self-host only. No SaaS version.
-
-
----
-
-*Made by [hmzainjamil](https://github.com/hmzainjamil) — star if useful*
+Made with ❤️ by [Vercel](https://vercel.com)
