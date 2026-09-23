@@ -1,5 +1,9 @@
 # ai-elements
 
+<!-- HMZ PORTFOLIO STANDARD -->
+> Portfolio status: active · Visibility: public · Source of truth: current repository source.
+<!-- END HMZ PORTFOLIO STANDARD -->
+
 > **Vercel-grade AI UI components** - shadcn-style React component library for AI apps - chat, streams, code blocks, citations, prompts, branches - built by Vercel, mirrored and extended here.
 
 <p align="center">
